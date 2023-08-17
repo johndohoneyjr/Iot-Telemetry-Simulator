@@ -1,4 +1,4 @@
-repo="yourreponame"
+repo="simulatorspareto.azurecr.io"
 if [ "$1" != "" ]; then
     repo="$1"
 fi
