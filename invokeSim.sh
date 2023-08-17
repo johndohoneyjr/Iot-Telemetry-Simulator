@@ -13,17 +13,17 @@ Template="{ \"deviceId\": \"$.DeviceId\", \"rand_int\": $.Temp, \"rand_double\":
 
 docker run -it -e \
  IotHubConnectionString="HostName=iot-pareto-hub.azure-devices.net;DeviceId=myDevice;SharedAccessKey=VZAvvTyaehzg61o97mviy3yE/6UoNpmsSnZekrkIUu8=" -e \
- Template="{\"type\": \"dynamb\", "data\": {\"deviceId\": $.MachineName,\"deviceIdType\": \"2\",\"timestamp\": $.LocalTime,\"temperature\": $.Temp,\"relativeHumidity\": $Humid}}" -e \
+ Template="{\"type\": \"dynamb\", "data\": {\"deviceId\": $.MachineName,\"deviceIdType\": \"2\",\"timestamp\": $.LocalTime,\"temperature\": $.Temp,\"relativeHumidity\": $.Humid}}" -e \
  Variables="[{name: \"Temp\", \"random\": true, \"max\": 0, \"min\": 100}, {\"name\":\"Humid\", \"min\":20, \"max\":100} ]" \
  simulatorspareto.azurecr.io/azureiot-telemetrysimulator:latest
 
- Template="{\"data\": {\"deviceId\": $.MachineName,\"deviceIdType\": \"2\",\"timestamp\": $.LocalTime,\"temperature\": $.Temp,\"relativeHumidity\": $Humid}}" -e \
+ -e Template="{\"type\": \"dynamb\", \"data\": {\"deviceId\": \"sim00001\",\"deviceIdType\": 2,\"timestamp\": $.Ticks}}"  \
 
 
 
 docker run -it -e MessageCount=5 \
  -e IotHubConnectionString="HostName=iot-pareto-hub.azure-devices.net;SharedAccessKey=+/KC4DHAbpSUHxEvpGYG8lbVXzAYhZ1rLzyrX62u82Q=" \
- -e Template="{"type": "dynamb", "data": {"deviceId": "sim000001","deviceIdType": 2,"timestamp": $.Ticks,"temperature": $.Temp,"relativeHumidity": $.Humid}}"  \
  -e Variables="[{name: \"Temp\", \"max\": 0, \"min\": 100}, {\"name\":\"Humid\", \"min\":20, \"max\":100} ]" \
+ -e Template="{\"type\": \"dynamb\", \"data\": {\"deviceId\": \"sim00001\",\"deviceIdType\": 2,\"timestamp\": $.Ticks, \"temperature\": $.Temp,\"relativeHumidity\": $.Humid}}"  \
  simulatorspareto.azurecr.io/azureiot-telemetrysimulator:latest
 
